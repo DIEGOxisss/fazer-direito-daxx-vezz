@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo de Clique</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            text-align: center;
+        }
+        #botao-jogar {
+            padding: 15px 30px;
+            font-size: 20px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        #botao-jogar:hover {
+            background-color: #45a049;
+        }
+        #resultado {
+            margin-top: 20px;
+            font-size: 24px;
+        }
+        #contagem {
+            font-size: 36px;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Jogo de Clique</h1>
+        <p>Clique no botão o máximo possível dentro de 10 segundos!</p>
+        <button id="botao-jogar">Clique Aqui!</button>
+        <div id="resultado"></div>
+        <div id="contagem">Tempo: 10</div>
+    </div>
+
+    <script>
+        let pontos = 0;
+        let tempoRestante = 10;
+        let timer;
+        let jogoAtivo = false;
+
+        const botao = document.getElementById("botao-jogar");
+        const resultado = document.getElementById("resultado");
+        const contagem = document.getElementById("contagem");
+
+        function iniciarJogo() {
+            pontos = 0;
+            tempoRestante = 10;
+            jogoAtivo = true;
+            resultado.textContent = `Pontos: ${pontos}`;
+            contagem.textContent = `Tempo: ${tempoRestante}`;
+            botao.disabled = false;
+
+            timer = setInterval(() => {
+                tempoRestante--;
+                contagem.textContent = `Tempo: ${tempoRestante}`;
+                if (tempoRestante <= 0) {
+                    clearInterval(timer);
+                    jogoAtivo = false;
+                    botao.disabled = true;
+                    resultado.textContent = `Jogo Acabou! Você fez ${pontos} pontos.`;
+                }
+            }, 1000);
+        }
+
+        botao.addEventListener("click", function () {
+            if (!jogoAtivo) {
+                iniciarJogo();
+            } else {
+                pontos++;
+                resultado.textContent = `Pontos: ${pontos}`;
+            }
+        });
+    </script>
+</body>
+</html>
